@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Obstacle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Zombie.tscn" type="PackedScene" id=2]
+
+[node name="Main" type="Node2D"]
+
+[node name="Obstacle" parent="." instance=ExtResource( 1 )]
+position = Vector2( 145, 80 )
+radius = 20
+
+[node name="Obstacle2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 704, 408 )
+radius = 100
+
+[node name="Obstacle3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 808, 112 )
+radius = 40
+
+[node name="Obstacle4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 112, 496 )
+radius = 20
+
+[node name="Obstacle5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 288, 280 )
+radius = 20
+
+[node name="Obstacle6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 592, 264 )
+radius = 10
+
+[node name="Obstacle7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 520, 152 )
+radius = 30
+
+[node name="Obstacle8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 456, 456 )
+radius = 30
+
+[node name="Obstacle9" parent="." instance=ExtResource( 1 )]
+position = Vector2( 872, 264 )
+radius = 30
+
+[node name="Obstacle10" parent="." instance=ExtResource( 1 )]
+position = Vector2( 912, 512 )
+radius = 30
+
+[node name="Zombie" parent="." instance=ExtResource( 2 )]
+position = Vector2( 432, 296 )
+
+[node name="Zombie2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 600, 504 )
+
+[node name="Zombie3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 664, 72 )
