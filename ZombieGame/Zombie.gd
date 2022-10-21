@@ -13,7 +13,7 @@ func _ready() -> void:
 
 func _physics_process(delta) -> void:
 	velocity += steering.calculate() * delta
-	velocity = velocity.limit_length(max_speed)
+	velocity = velocity.clamped(max_speed)
 	position += velocity * delta
 
 func _draw() -> void:
