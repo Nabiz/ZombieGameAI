@@ -45,19 +45,21 @@ radius = 30
 position = Vector2( 912, 512 )
 radius = 30
 
+[node name="Obstacle11" parent="." instance=ExtResource( 1 )]
+position = Vector2( 264, 408 )
+radius = 30
+
+[node name="Obstacle12" parent="." instance=ExtResource( 1 )]
+position = Vector2( 152, 328 )
+radius = 30
+
+[node name="Obstacle13" parent="." instance=ExtResource( 1 )]
+position = Vector2( 424, 376 )
+radius = 30
+
+[node name="Obstacle14" parent="." instance=ExtResource( 1 )]
+position = Vector2( 352, 200 )
+radius = 30
+
 [node name="Zombie" parent="." instance=ExtResource( 2 )]
 position = Vector2( 496, 296 )
-state = "pursuit"
-
-[node name="Zombie2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 496, 296 )
-
-[node name="Zombie3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 496, 296 )
-
-[node name="Zombie4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 496, 296 )
-
-[node name="Zombie5" parent="." instance=ExtResource( 2 )]
-position = Vector2( 496, 296 )
-rotation = -2.0769
