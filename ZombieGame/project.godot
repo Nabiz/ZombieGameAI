@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "SteeringBehaviors",
 "language": "GDScript",
 "path": "res://SteeringBehaviors.gd"
+}, {
+"base": "Node2D",
+"class": "Wall",
+"language": "GDScript",
+"path": "res://Wall.gd"
 } ]
 _global_script_class_icons={
-"SteeringBehaviors": ""
+"SteeringBehaviors": "",
+"Wall": ""
 }
 
 [application]

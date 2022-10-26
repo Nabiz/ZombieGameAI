@@ -6,6 +6,7 @@ var zombie
 var rng
 
 var all_obstacles = []
+var all_walls = []
 
 func _init(new_zombie) -> void:
 	rng = RandomNumberGenerator.new()
@@ -16,10 +17,13 @@ func _init(new_zombie) -> void:
 	for child in children:
 		if child.is_in_group("Obstacle"):
 			all_obstacles.append(child)
+		if child.is_in_group("Wall"):
+			all_walls.append(child)
 
 func calculate() -> Vector2:
-	var seek = seek(Vector2(400, 600))
-	return seek + obstacle_avoidance(all_obstacles)
+	#var seek = seek(Vector2(400, 700))
+	var wa = wall_avoidance(all_walls)
+	return wander() + 2*wa + 2*obstacle_avoidance(all_obstacles)
 
 #SEEK
 func seek(target_position: Vector2) -> Vector2:
@@ -65,9 +69,9 @@ func evade(pursuer) -> Vector2:
 	return flee(pursuer.position + pursuer.velocity * look_ahead_time)
 
 #WANDER
-var wander_radius: float = 300
-var wander_distance: float = 500
-var wander_jitter: float = 200
+var wander_radius: float = 60
+var wander_distance: float = 20
+var wander_jitter: float = 100
 var wander_target: Vector2 = Vector2.ZERO
 
 func wander() -> Vector2:
@@ -112,17 +116,39 @@ func obstacle_avoidance(obstacles) -> Vector2:
 		steering_force.x = (closest_obstacle.radius - local_pos_of_closest_obstacle.x) * breaking_weight
 	return steering_force.rotated(zombie.rotation)
 
+#WALL AVOIDANCE
+var feelers = []
+func create_feelers():
+	var feeler_lenght = 20
+	feelers = []
+	feelers.append((feeler_lenght*Vector2.RIGHT).rotated(zombie.rotation) + zombie.position)
+	feelers.append((feeler_lenght*Vector2.UP).rotated(zombie.rotation) + zombie.position)
+	feelers.append((feeler_lenght*Vector2.DOWN).rotated(zombie.rotation) + zombie.position)
 
+func line_intersection(feeler, wall):
+	if feeler.x > wall.position.x and feeler.x < wall.position.x + wall.size.x:
+		if feeler.y > wall.position.y and feeler.y < wall.position.y + wall.size.y:
+			return true
+	return false
 
-
-
-
-
-
-
-
-
-
-
-
-
+func wall_avoidance(walls):
+	create_feelers()
+	var dist_to_this_ip: float = 10.0
+	var dist_to_closest_ip: float = 99999
+	var closest_wall: Wall = null
+	
+	var steering_force: Vector2 = Vector2.ZERO;
+	var point: Vector2;
+	var closest_point: Vector2;
+	for feeler in feelers:
+		for wall in walls:
+			if line_intersection(feeler, wall): #LINE INTERSECTION
+				if dist_to_this_ip < dist_to_closest_ip:
+					dist_to_closest_ip = dist_to_this_ip
+					closest_wall = wall
+					closest_point = point
+		# FORCE CALCULATION
+		if closest_wall:
+			var over_shoot = feeler - closest_point
+			steering_force = closest_wall.normal * over_shoot.length()
+	return steering_force

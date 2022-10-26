@@ -11,7 +11,7 @@ var max_speed: float
 export var state = "seek"
 
 func _ready() -> void:
-	max_speed = 50
+	max_speed = 40
 	radius = 10
 	steering = SteeringBehaviors.new(self)
 	heading = Vector2.RIGHT
