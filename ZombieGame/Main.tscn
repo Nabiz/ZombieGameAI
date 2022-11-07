@@ -1,27 +1,36 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Obstacle.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Zombie.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Wall.gd" type="Script" id=3]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=4]
 
 [node name="Main" type="Node2D"]
 
-[node name="WallN" type="Node2D" parent="." groups=["Wall"]]
+[node name="WallN" type="Node2D" parent="." groups=[
+"Wall",
+]]
 script = ExtResource( 3 )
 size = Vector2( 1024, 20 )
 normal = Vector2( 0, 1 )
 
-[node name="WallS" type="Node2D" parent="." groups=["Wall"]]
+[node name="WallS" type="Node2D" parent="." groups=[
+"Wall",
+]]
 position = Vector2( 0, 580 )
 script = ExtResource( 3 )
 size = Vector2( 1024, 20 )
 normal = Vector2( 0, -1 )
 
-[node name="WallW" type="Node2D" parent="." groups=["Wall"]]
+[node name="WallW" type="Node2D" parent="." groups=[
+"Wall",
+]]
 script = ExtResource( 3 )
 size = Vector2( 20, 600 )
 
-[node name="WallE" type="Node2D" parent="." groups=["Wall"]]
+[node name="WallE" type="Node2D" parent="." groups=[
+"Wall",
+]]
 position = Vector2( 1004, 0 )
 script = ExtResource( 3 )
 size = Vector2( 20, 600 )
@@ -47,10 +56,6 @@ radius = 20
 position = Vector2( 296, 200 )
 radius = 40
 
-[node name="Obstacle6" parent="." instance=ExtResource( 1 )]
-position = Vector2( 464, 448 )
-radius = 20
-
 [node name="Obstacle7" parent="." instance=ExtResource( 1 )]
 position = Vector2( 488, 88 )
 radius = 60
@@ -67,22 +72,25 @@ radius = 60
 position = Vector2( 496, 296 )
 
 [node name="Zombie2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 496, 296 )
+position = Vector2( 576, 280 )
 
 [node name="Zombie3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 496, 296 )
+position = Vector2( 480, 248 )
 
 [node name="Zombie4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 496, 296 )
+position = Vector2( 632, 352 )
 
 [node name="Zombie5" parent="." instance=ExtResource( 2 )]
-position = Vector2( 496, 296 )
+position = Vector2( 544, 200 )
 
 [node name="Zombie6" parent="." instance=ExtResource( 2 )]
-position = Vector2( 496, 296 )
+position = Vector2( 408, 304 )
 
 [node name="Zombie7" parent="." instance=ExtResource( 2 )]
-position = Vector2( 496, 296 )
+position = Vector2( 680, 256 )
 
 [node name="Zombie8" parent="." instance=ExtResource( 2 )]
-position = Vector2( 496, 296 )
+position = Vector2( 416, 168 )
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
+position = Vector2( 320, 408 )

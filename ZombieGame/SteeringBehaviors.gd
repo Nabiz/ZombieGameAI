@@ -23,7 +23,9 @@ func _init(new_zombie) -> void:
 func calculate() -> Vector2:
 	#var seek = seek(Vector2(400, 700))
 	var wa = wall_avoidance(all_walls)
-	return wander() + 2*wa + 2*obstacle_avoidance(all_obstacles)
+#	return wander() + 2*wa + 2*obstacle_avoidance(all_obstacles)
+	var player = zombie.get_parent().get_node("Player")
+	return 10* wa + hide(player, all_obstacles)
 
 #SEEK
 func seek(target_position: Vector2) -> Vector2:
@@ -125,21 +127,21 @@ func create_feelers():
 	feelers.append((feeler_lenght*Vector2.UP).rotated(zombie.rotation) + zombie.position)
 	feelers.append((feeler_lenght*Vector2.DOWN).rotated(zombie.rotation) + zombie.position)
 
-func line_intersection(feeler, wall):
+func line_intersection(feeler, wall) -> bool:
 	if feeler.x > wall.position.x and feeler.x < wall.position.x + wall.size.x:
 		if feeler.y > wall.position.y and feeler.y < wall.position.y + wall.size.y:
 			return true
 	return false
 
-func wall_avoidance(walls):
+func wall_avoidance(walls) -> Vector2:
 	create_feelers()
 	var dist_to_this_ip: float = 10.0
 	var dist_to_closest_ip: float = 99999
 	var closest_wall: Wall = null
 	
-	var steering_force: Vector2 = Vector2.ZERO;
-	var point: Vector2;
-	var closest_point: Vector2;
+	var steering_force: Vector2 = Vector2.ZERO
+	var point: Vector2
+	var closest_point: Vector2
 	for feeler in feelers:
 		for wall in walls:
 			if line_intersection(feeler, wall): #LINE INTERSECTION
@@ -152,3 +154,24 @@ func wall_avoidance(walls):
 			var over_shoot = feeler - closest_point
 			steering_force = closest_wall.normal * over_shoot.length()
 	return steering_force
+
+#HIDE
+func get_hiding_position(pos_ob, radius_ob, pos_target) -> Vector2:
+	var distance_from_boundary: float = 25.0
+	var dist_away = radius_ob + distance_from_boundary
+	var to_ob: Vector2 = (pos_ob - pos_target).normalized()
+	return (to_ob * dist_away) + pos_ob
+
+func hide(target, obstacles) -> Vector2:
+	var dist_to_closest: float = 99999
+	var best_hiding_spot: Vector2
+	
+	for obstacle in obstacles:
+		var hiding_spot = get_hiding_position(obstacle.position, obstacle.radius, target.position)
+		var dist = (hiding_spot - zombie.position).length_squared()
+		if dist < dist_to_closest:
+			dist_to_closest = dist
+			best_hiding_spot = hiding_spot
+	if dist_to_closest == 99999:
+		return evade(target)
+	return arrive(best_hiding_spot, Deceleration.fast)
