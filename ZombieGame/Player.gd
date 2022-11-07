@@ -8,8 +8,8 @@ var angle_speed = 3
 var laser
 
 func _ready():
-	#velocity = Vector2.ZERO
-	laser = $ColorRect 
+	Utils.player = self
+	laser = $ColorRect
 
 func _physics_process(delta):
 	if Input.is_action_pressed("ui_right"):

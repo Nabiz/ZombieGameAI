@@ -30,6 +30,10 @@ config/name="Zombie Game"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Utils="*res://Utils.gd"
+
 [display]
 
 window/size/resizable=false
