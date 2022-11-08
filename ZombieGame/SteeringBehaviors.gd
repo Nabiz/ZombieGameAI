@@ -24,10 +24,11 @@ func _init(new_zombie) -> void:
 
 func calculate() -> Vector2:
 	#var seek = seek(Vector2(400, 700))
-	var wa = wall_avoidance(all_walls)
+	#var wa = wall_avoidance(all_walls)
 #	return wander() + 2*wa + 2*obstacle_avoidance(all_obstacles)
-	var player = zombie.get_parent().get_node("Player")
-	return 10* wa + hide(player, all_obstacles)
+	#var player = zombie.get_parent().get_node("Player")
+	zombie.tag_neighbors(150)
+	return hide(Utils.player, all_obstacles)
 
 #SEEK
 func seek(target_position: Vector2) -> Vector2:
@@ -177,3 +178,25 @@ func hide(target, obstacles) -> Vector2:
 	if dist_to_closest == 99999:
 		return evade(target)
 	return arrive(best_hiding_spot, Deceleration.fast)
+
+## STERING BEHAVIORS
+#SEPARATION
+func separation():
+	var steering_force: Vector2
+	for neighbor in Utils.zombies:
+		if neighbor != zombie and neighbor.tag:
+			var to_agent: Vector2 = zombie.position - neighbor.position
+			steering_force += to_agent.normalized() / to_agent.length()
+	return steering_force
+#ALIGNMENT
+func aligment():
+	var average_heading: Vector2
+	var neighbor_count: int
+	for neighbor in zombie.neighbors:
+		if neighbor != zombie and neighbor.tag:
+			average_heading += neighbor.heading
+			neighbor_count += 1
+	if neighbor_count > 0:
+		average_heading /= neighbor_count
+		average_heading -= zombie.heading
+	return average_heading

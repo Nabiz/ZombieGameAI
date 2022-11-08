@@ -8,9 +8,12 @@ var side: Vector2
 var steering: SteeringBehaviors
 var max_speed: float
 
+var tagged: bool =  false
+
 export var state = "seek"
 
 func _ready() -> void:
+	Utils.zombies.append(self)
 	max_speed = 40
 	radius = 10
 	steering = SteeringBehaviors.new(self)
@@ -36,3 +39,11 @@ func _physics_process(delta) -> void:
 func _draw() -> void:
 	draw_circle(Vector2.ZERO, radius, Color.darkred)
 	draw_circle(radius*Vector2.RIGHT, 5, Color.darkred)
+
+func tag_neighbors(radius: float):
+	for zombie in Utils.zombie:
+		zombie.tagged = false
+		var to: Vector2 = zombie.position - position
+		var range_radius = radius + zombie.radius
+		if zombie != self and to.length_squared() < range_radius * range_radius:
+			zombie.tagged = true
