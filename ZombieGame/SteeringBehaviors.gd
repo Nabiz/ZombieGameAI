@@ -27,8 +27,9 @@ func calculate() -> Vector2:
 	#var wa = wall_avoidance(all_walls)
 #	return wander() + 2*wa + 2*obstacle_avoidance(all_obstacles)
 	#var player = zombie.get_parent().get_node("Player")
-	zombie.tag_neighbors(500)
-	return wander() #+ 100 * aligment()#hide(Utils.player, all_obstacles)
+	zombie.tag_neighbors(100)
+	#return wander() #+ 100 * aligment()#hide(Utils.player, all_obstacles)
+	return wander() + 0.25*cohesion() + 5*separation() + 2*aligment()
 
 #SEEK
 func seek(target_position: Vector2) -> Vector2:
@@ -181,7 +182,7 @@ func hide(target, obstacles) -> Vector2:
 
 ## STERING BEHAVIORS
 #SEPARATION
-func separation():
+func separation() -> Vector2:
 	var steering_force: Vector2 = Vector2.ZERO
 	for neighbor in Utils.zombies:
 		if neighbor != zombie and neighbor.tagged:
@@ -189,7 +190,7 @@ func separation():
 			steering_force += to_agent.normalized() / to_agent.length()
 	return steering_force
 #ALIGNMENT
-func aligment():
+func aligment() -> Vector2:
 	var average_heading: Vector2 = Vector2.ZERO
 	var neighbor_count: int = 0
 	for neighbor in Utils.zombies:
@@ -200,3 +201,16 @@ func aligment():
 		average_heading /= neighbor_count
 		average_heading -= zombie.heading
 	return average_heading
+#COHESION
+func cohesion() -> Vector2:
+	var center_of_mass: Vector2 = Vector2.ZERO
+	var steering_force: Vector2 = Vector2.ZERO
+	var neighbor_count: int = 0
+	for neighbor in Utils.zombies:
+		if neighbor != zombie and neighbor.tagged:
+			center_of_mass += neighbor.position
+			neighbor_count += 1
+	if neighbor_count > 0:
+		center_of_mass /= neighbor_count
+		steering_force = seek(center_of_mass)
+	return steering_force
