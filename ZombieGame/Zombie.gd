@@ -41,7 +41,7 @@ func _draw() -> void:
 	draw_circle(radius*Vector2.RIGHT, 5, Color.darkred)
 
 func tag_neighbors(radius: float):
-	for zombie in Utils.zombie:
+	for zombie in Utils.zombies:
 		zombie.tagged = false
 		var to: Vector2 = zombie.position - position
 		var range_radius = radius + zombie.radius
