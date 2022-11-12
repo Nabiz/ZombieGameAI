@@ -29,7 +29,7 @@ func calculate() -> Vector2:
 	#var player = zombie.get_parent().get_node("Player")
 	zombie.tag_neighbors(100)
 	#return wander() #+ 100 * aligment()#hide(Utils.player, all_obstacles)
-	return wander() + 0.25*cohesion() + 5*separation() + 2*aligment()
+	return 10*seek(Utils.player.position) + wander() + 0.25*cohesion() + 5*separation() + 2*aligment() + 10*wall_avoidance(Utils.walls) + 5*obstacle_avoidance(Utils.obstacles)
 
 #SEEK
 func seek(target_position: Vector2) -> Vector2:
