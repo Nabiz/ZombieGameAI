@@ -10,31 +10,28 @@ var max_speed: float
 
 var tagged: bool =  false
 
-export var state = "seek"
+export var state = "hide"
 
 func _ready() -> void:
 	Utils.zombies.append(self)
-	max_speed = 40
+	max_speed = 100
 	radius = 10
 	steering = SteeringBehaviors.new(self)
 	heading = Vector2.RIGHT
 	side = heading.rotated(PI/2)
+	state = "hide"
 
 func _physics_process(delta) -> void:
-	match state:
-		"seek":
-			velocity += steering.calculate() * delta
-		"pursuit":
-			velocity += steering.pursuit(get_parent().get_node("Zombie2")) * delta
-		"evade":
-			velocity += steering.evade(get_parent().get_node("Zombie3")) * delta
-		
+	velocity += steering.calculate(state) * delta
 	velocity = velocity.clamped(max_speed)
 	position += velocity * delta
 	if velocity.length_squared() > 50:
 		heading = velocity.normalized()
 		side = heading.rotated(PI/2)
 		rotation = heading.angle()
+	
+	position.x=clamp(position.x, 20+radius, 1004-radius)
+	position.y=clamp(position.y, 20+radius, 580-radius)
 
 func _draw() -> void:
 	draw_circle(Vector2.ZERO, radius, Color.darkred)
@@ -47,3 +44,8 @@ func tag_neighbors(radius: float):
 		var range_radius = radius + zombie.radius
 		if zombie != self and to.length_squared() < range_radius * range_radius:
 			zombie.tagged = true
+
+
+func _on_Timer_timeout():
+	var states = ["pursuit", "hide", "wander"]
+	state = states[randi() % states.size()]

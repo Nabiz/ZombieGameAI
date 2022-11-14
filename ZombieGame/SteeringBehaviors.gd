@@ -22,14 +22,19 @@ func _init(new_zombie) -> void:
 #		if child.is_in_group("Wall"):
 #			all_walls.append(child)
 
-func calculate() -> Vector2:
-	#var seek = seek(Vector2(400, 700))
-	#var wa = wall_avoidance(all_walls)
-#	return wander() + 2*wa + 2*obstacle_avoidance(all_obstacles)
-	#var player = zombie.get_parent().get_node("Player")
+
+func calculate(state: String) -> Vector2:
 	zombie.tag_neighbors(100)
-	#return wander() #+ 100 * aligment()#hide(Utils.player, all_obstacles)
-	return 10*seek(Utils.player.position) + wander() + 0.25*cohesion() + 5*separation() + 2*aligment() + 10*wall_avoidance(Utils.walls) + 5*obstacle_avoidance(Utils.obstacles)
+	var steering: Vector2 = 0.25 * cohesion() + 10*separation() + aligment() + 1000*wall_avoidance(Utils.walls) + 2*obstacle_avoidance(Utils.obstacles)
+	match state:
+		"pursuit":
+			return steering + pursuit(Utils.player)
+		"wander":
+			return steering + wander()
+		"hide":
+			return steering + hide(Utils.player, Utils.obstacles)
+		_:
+			return Vector2.ZERO
 
 #SEEK
 func seek(target_position: Vector2) -> Vector2:
