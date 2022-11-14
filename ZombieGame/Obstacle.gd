@@ -1,6 +1,6 @@
 extends Node2D
 
-export var radius: int
+export var radius: int = 40
 
 func _ready():
 	Utils.obstacles.append(self)

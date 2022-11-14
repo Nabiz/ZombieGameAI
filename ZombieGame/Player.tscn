@@ -12,7 +12,11 @@ margin_top = -4.0
 margin_right = 1200.0
 margin_bottom = 4.0
 rect_pivot_offset = Vector2( 0, 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Sprite" type="Sprite" parent="."]
+rotation = -1.5708
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )

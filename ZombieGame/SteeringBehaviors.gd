@@ -24,17 +24,25 @@ func _init(new_zombie) -> void:
 
 
 func calculate(state: String) -> Vector2:
-	zombie.tag_neighbors(100)
-	var steering: Vector2 = 0.25 * cohesion() + 10*separation() + aligment() + 1000*wall_avoidance(Utils.walls) + 2*obstacle_avoidance(Utils.obstacles)
+	zombie.tag_neighbors(40)
 	match state:
 		"pursuit":
-			return steering + pursuit(Utils.player)
+			return calculate_pursuit()
 		"wander":
-			return steering + wander()
+			return calculate_wander()
 		"hide":
-			return steering + hide(Utils.player, Utils.obstacles)
+			return calculate_hide()
 		_:
 			return Vector2.ZERO
+
+func calculate_wander():
+	return wander() + cohesion() + separation() + aligment() + wall_avoidance(Utils.walls) + obstacle_avoidance(Utils.obstacles)
+
+func calculate_pursuit():
+	return pursuit(Utils.player) + wall_avoidance(Utils.walls) + separation() + obstacle_avoidance(Utils.obstacles)
+
+func calculate_hide():
+	return 2*hide(Utils.player, Utils.obstacles) + obstacle_avoidance(Utils.obstacles) + wall_avoidance(Utils.walls) + 0.5*separation()
 
 #SEEK
 func seek(target_position: Vector2) -> Vector2:
@@ -188,14 +196,16 @@ func hide(target, obstacles) -> Vector2:
 ## STERING BEHAVIORS
 #SEPARATION
 func separation() -> Vector2:
+	zombie.tag_neighbors(30)
 	var steering_force: Vector2 = Vector2.ZERO
 	for neighbor in Utils.zombies:
 		if neighbor != zombie and neighbor.tagged:
 			var to_agent: Vector2 = zombie.position - neighbor.position
 			steering_force += to_agent.normalized() / to_agent.length()
-	return steering_force
+	return 1000*steering_force
 #ALIGNMENT
 func aligment() -> Vector2:
+	zombie.tag_neighbors(200)
 	var average_heading: Vector2 = Vector2.ZERO
 	var neighbor_count: int = 0
 	for neighbor in Utils.zombies:
@@ -208,6 +218,7 @@ func aligment() -> Vector2:
 	return average_heading
 #COHESION
 func cohesion() -> Vector2:
+	zombie.tag_neighbors(40)
 	var center_of_mass: Vector2 = Vector2.ZERO
 	var steering_force: Vector2 = Vector2.ZERO
 	var neighbor_count: int = 0

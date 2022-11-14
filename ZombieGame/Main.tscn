@@ -9,6 +9,33 @@
 [node name="Main" type="Node2D"]
 script = ExtResource( 5 )
 
+[node name="Obstacle" parent="." instance=ExtResource( 1 )]
+position = Vector2( 168, 128 )
+radius = 50
+
+[node name="Obstacle2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 848, 432 )
+radius = 50
+
+[node name="Obstacle3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 432, 192 )
+radius = 65
+
+[node name="Obstacle6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 192, 400 )
+radius = 60
+
+[node name="Obstacle7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 512, 464 )
+
+[node name="Obstacle4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 680, 304 )
+radius = 80
+
+[node name="Obstacle5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 832, 136 )
+radius = 45
+
 [node name="WallN" type="Node2D" parent="." groups=[
 "Wall",
 ]]
@@ -38,127 +65,89 @@ script = ExtResource( 3 )
 size = Vector2( 20, 600 )
 normal = Vector2( -1, 0 )
 
-[node name="Obstacle" parent="." instance=ExtResource( 1 )]
-position = Vector2( 145, 80 )
-radius = 20
-
-[node name="Obstacle2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 800, 400 )
-radius = 40
-
-[node name="Obstacle3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 648, 176 )
-radius = 20
-
-[node name="Obstacle4" parent="." instance=ExtResource( 1 )]
-position = Vector2( 216, 384 )
-radius = 20
-
-[node name="Obstacle5" parent="." instance=ExtResource( 1 )]
-position = Vector2( 296, 200 )
-radius = 40
-
-[node name="Obstacle7" parent="." instance=ExtResource( 1 )]
-position = Vector2( 488, 88 )
-radius = 60
-
-[node name="Obstacle8" parent="." instance=ExtResource( 1 )]
-position = Vector2( 640, 504 )
-radius = 40
-
-[node name="Obstacle9" parent="." instance=ExtResource( 1 )]
-position = Vector2( 904, 208 )
-radius = 60
+[node name="Player" parent="." instance=ExtResource( 4 )]
+position = Vector2( 40, 552 )
 
 [node name="Zombie" parent="." instance=ExtResource( 2 )]
-position = Vector2( 496, 296 )
+position = Vector2( 872, 48 )
 
 [node name="Zombie2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 576, 280 )
+position = Vector2( 928, 72 )
 
 [node name="Zombie3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 480, 248 )
+position = Vector2( 968, 128 )
 
 [node name="Zombie4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 632, 352 )
+position = Vector2( 920, 208 )
 
 [node name="Zombie5" parent="." instance=ExtResource( 2 )]
-position = Vector2( 544, 200 )
+position = Vector2( 968, 304 )
 
 [node name="Zombie6" parent="." instance=ExtResource( 2 )]
-position = Vector2( 408, 304 )
+position = Vector2( 952, 456 )
 
 [node name="Zombie7" parent="." instance=ExtResource( 2 )]
-position = Vector2( 680, 256 )
+position = Vector2( 896, 352 )
 
 [node name="Zombie8" parent="." instance=ExtResource( 2 )]
-position = Vector2( 416, 168 )
+position = Vector2( 688, 88 )
 
 [node name="Zombie9" parent="." instance=ExtResource( 2 )]
-position = Vector2( 64, 208 )
+position = Vector2( 536, 56 )
 
 [node name="Zombie10" parent="." instance=ExtResource( 2 )]
-position = Vector2( 192, 536 )
+position = Vector2( 400, 40 )
 
 [node name="Zombie11" parent="." instance=ExtResource( 2 )]
-position = Vector2( 480, 568 )
+position = Vector2( 296, 32 )
 
 [node name="Zombie12" parent="." instance=ExtResource( 2 )]
-position = Vector2( 816, 520 )
+position = Vector2( 64, 56 )
 
 [node name="Zombie13" parent="." instance=ExtResource( 2 )]
-position = Vector2( 952, 264 )
+position = Vector2( 96, 120 )
 
 [node name="Zombie14" parent="." instance=ExtResource( 2 )]
-position = Vector2( 832, 64 )
+position = Vector2( 296, 288 )
 
 [node name="Zombie15" parent="." instance=ExtResource( 2 )]
-position = Vector2( 944, 128 )
+position = Vector2( 408, 336 )
 
 [node name="Zombie16" parent="." instance=ExtResource( 2 )]
-position = Vector2( 936, 336 )
+position = Vector2( 296, 200 )
 
 [node name="Zombie17" parent="." instance=ExtResource( 2 )]
-position = Vector2( 104, 328 )
+position = Vector2( 576, 224 )
 
 [node name="Zombie18" parent="." instance=ExtResource( 2 )]
-position = Vector2( 304, 312 )
+position = Vector2( 560, 304 )
 
 [node name="Zombie19" parent="." instance=ExtResource( 2 )]
-position = Vector2( 856, 112 )
+position = Vector2( 696, 216 )
 
 [node name="Zombie20" parent="." instance=ExtResource( 2 )]
-position = Vector2( 808, 264 )
+position = Vector2( 688, 408 )
 
 [node name="Zombie21" parent="." instance=ExtResource( 2 )]
-position = Vector2( 736, 96 )
-
-[node name="Zombie22" parent="." instance=ExtResource( 2 )]
-position = Vector2( 352, 56 )
+position = Vector2( 728, 472 )
 
 [node name="Zombie23" parent="." instance=ExtResource( 2 )]
-position = Vector2( 616, 80 )
+position = Vector2( 800, 320 )
 
 [node name="Zombie24" parent="." instance=ExtResource( 2 )]
-position = Vector2( 264, 248 )
+position = Vector2( 872, 280 )
 
 [node name="Zombie25" parent="." instance=ExtResource( 2 )]
-position = Vector2( 208, 200 )
+position = Vector2( 576, 384 )
 
 [node name="Zombie26" parent="." instance=ExtResource( 2 )]
-position = Vector2( 248, 104 )
+position = Vector2( 472, 400 )
 
 [node name="Zombie27" parent="." instance=ExtResource( 2 )]
-position = Vector2( 472, 168 )
+position = Vector2( 360, 112 )
 
 [node name="Zombie28" parent="." instance=ExtResource( 2 )]
-position = Vector2( 360, 216 )
+position = Vector2( 592, 112 )
 
-[node name="Zombie29" parent="." instance=ExtResource( 2 )]
-position = Vector2( 416, 104 )
-
-[node name="Zombie30" parent="." instance=ExtResource( 2 )]
-position = Vector2( 360, 144 )
-
-[node name="Player" parent="." instance=ExtResource( 4 )]
-position = Vector2( 320, 408 )
+[node name="Zombie22" parent="." instance=ExtResource( 2 )]
+position = Vector2( 640, 496 )
