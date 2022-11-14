@@ -4,6 +4,7 @@ var container_of_entities = []
 var movable_entities = []
 
 func _ready():
+	Utils.main = self
 	container_of_entities += Utils.zombies + Utils.obstacles
 	container_of_entities.append(Utils.player)
 	movable_entities += Utils.zombies
