@@ -36,7 +36,7 @@ func calculate(state: String) -> Vector2:
 			return Vector2.ZERO
 
 func calculate_wander():
-	return wander() + cohesion() + separation() + aligment() + wall_avoidance(Utils.walls) + obstacle_avoidance(Utils.obstacles)
+	return wander() + cohesion() + separation() + aligment() + wall_avoidance(Utils.walls) + 2*obstacle_avoidance(Utils.obstacles)
 
 func calculate_pursuit():
 	return pursuit(Utils.player) + wall_avoidance(Utils.walls) + separation() + obstacle_avoidance(Utils.obstacles)
@@ -138,7 +138,7 @@ func obstacle_avoidance(obstacles) -> Vector2:
 #WALL AVOIDANCE
 var feelers = []
 func create_feelers():
-	var feeler_lenght = 20
+	var feeler_lenght = 40
 	feelers = []
 	feelers.append((feeler_lenght*Vector2.RIGHT).rotated(zombie.rotation) + zombie.position)
 	feelers.append((feeler_lenght*Vector2.UP).rotated(zombie.rotation) + zombie.position)
