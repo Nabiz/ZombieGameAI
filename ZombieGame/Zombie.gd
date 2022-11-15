@@ -33,16 +33,19 @@ func _physics_process(delta) -> void:
 	position.x=clamp(position.x, 20+radius, 1004-radius)
 	position.y=clamp(position.y, 20+radius, 580-radius)
 
+	$Sprite.visible = state == "pursuit"
+		
+
 func calculate_state():
 	if (position - Utils.player.position).length_squared() < 60000:
 		max_speed = 100
 		return "pursuit"
-	if Utils.player.is_laser:
-		max_speed = 100
-		return "hide"
-	if (position - Utils.player.position).length_squared() > 90000 or state=="hide":
-		max_speed = 40
-		return "wander"
+#	if Utils.player.is_laser:
+#		max_speed = 100
+#		return "hide"
+#	if (position - Utils.player.position).length_squared() > 90000 or state=="hide":
+#		max_speed = 40
+#		return "wander"
 	return state
 
 func _draw() -> void:

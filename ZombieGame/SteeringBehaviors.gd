@@ -39,7 +39,7 @@ func calculate_wander():
 	return wander() + cohesion() + separation() + aligment() + wall_avoidance(Utils.walls) + 2*obstacle_avoidance(Utils.obstacles)
 
 func calculate_pursuit():
-	return pursuit(Utils.player) + wall_avoidance(Utils.walls) + separation() + obstacle_avoidance(Utils.obstacles)
+	return pursuit(Utils.player) + wall_avoidance(Utils.walls) + obstacle_avoidance(Utils.obstacles)
 
 func calculate_hide():
 	return 2*hide(Utils.player, Utils.obstacles) + obstacle_avoidance(Utils.obstacles) + wall_avoidance(Utils.walls) + 0.5*separation()

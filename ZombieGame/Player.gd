@@ -26,10 +26,6 @@ func _physics_process(delta):
 		$LaserGhost.start(0.25)
 		$Timer.start(2)
 	
-#	if Input.is_action_pressed("ui_right"):
-#		rotation += delta * angle_speed
-#	elif Input.is_action_pressed("ui_left"):
-#		rotation -= delta * angle_speed
 	rotation = (get_viewport().get_mouse_position()-position).angle()
 	
 	if Input.is_action_pressed("ui_up"):

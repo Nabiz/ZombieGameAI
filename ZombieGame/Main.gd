@@ -22,3 +22,17 @@ func enforce_non_penetration_constraint(entity):
 			var amout_of_overlap = entity.radius + current_entity.radius - dist_from_each_oder
 			if amout_of_overlap >= 0:
 				entity.position += (to_entity/dist_from_each_oder) * amout_of_overlap
+
+func set_zombie_attack():
+	var i = randi() % Utils.zombies.size()
+	var z = Utils.zombies[i]
+	z.tag_neighbors(200)
+	z.state = "pursuit"
+	for zombie in Utils.zombies:
+		if zombie.tagged:
+			zombie.state = "pursuit"
+	$Timer.start(10)
+
+
+func _on_Timer_timeout():
+	set_zombie_attack()
