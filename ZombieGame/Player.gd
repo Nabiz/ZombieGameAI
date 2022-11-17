@@ -2,7 +2,7 @@ extends Node2D
 
 
 var radius: int = 16
-var speed = 100
+var speed = 60
 var angle_speed = 1
 var heading = Vector2.RIGHT
 var velocity = Vector2.ZERO
@@ -20,8 +20,8 @@ func _physics_process(delta):
 		laser.visible = true
 		can_laser = false
 		is_laser = true
-		$LaserGhost.start(0.25)
-		$Timer.start(2)
+		$LaserGhost.start(0.2)
+		$Timer.start(1)
 		set_laser_size()
 		process_laser_attack()
 	

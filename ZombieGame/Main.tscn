@@ -25,6 +25,10 @@ radius = 65
 position = Vector2( 192, 400 )
 radius = 60
 
+[node name="Obstacle8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 389, 366 )
+radius = 45
+
 [node name="Obstacle7" parent="." instance=ExtResource( 1 )]
 position = Vector2( 512, 464 )
 
@@ -103,7 +107,7 @@ position = Vector2( 96, 120 )
 position = Vector2( 296, 288 )
 
 [node name="Zombie15" parent="." instance=ExtResource( 2 )]
-position = Vector2( 408, 336 )
+position = Vector2( 420, 306 )
 
 [node name="Zombie16" parent="." instance=ExtResource( 2 )]
 position = Vector2( 296, 200 )
@@ -143,3 +147,9 @@ position = Vector2( 592, 112 )
 
 [node name="Zombie22" parent="." instance=ExtResource( 2 )]
 position = Vector2( 640, 496 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

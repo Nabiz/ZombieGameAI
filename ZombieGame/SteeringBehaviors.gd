@@ -39,10 +39,10 @@ func calculate_wander():
 	return wander() + cohesion() + separation() + aligment() + wall_avoidance(Utils.walls) + 2*obstacle_avoidance(Utils.obstacles)
 
 func calculate_pursuit():
-	return pursuit(Utils.player) + wall_avoidance(Utils.walls) + separation() + obstacle_avoidance(Utils.obstacles)
+	return pursuit(Utils.player) + wall_avoidance(Utils.walls) + obstacle_avoidance(Utils.obstacles)
 
 func calculate_hide():
-	return 2*hide(Utils.player, Utils.obstacles) + obstacle_avoidance(Utils.obstacles) + wall_avoidance(Utils.walls) + 0.5*separation()
+	return wander() + 2*hide(Utils.player, Utils.obstacles) + obstacle_avoidance(Utils.obstacles) + wall_avoidance(Utils.walls) + 0.5*separation()
 
 #SEEK
 func seek(target_position: Vector2) -> Vector2:
@@ -79,7 +79,7 @@ func pursuit(evader) -> Vector2:
 	if to_evader.dot(zombie.heading) > 0 and relative_heading < -0.95:
 		return seek(evader.position)
 	var look_ahead_time: float = to_evader.length() / (zombie.max_speed + evader.velocity.length())
-	return seek(evader.position + evader.velocity * look_ahead_time)
+	return seek(evader.position + evader.velocity * 1.5 * look_ahead_time)
 
 #EVADE
 func evade(pursuer) -> Vector2:
