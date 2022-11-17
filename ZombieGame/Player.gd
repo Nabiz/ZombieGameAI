@@ -16,30 +16,29 @@ func _ready():
 	laser = $ColorRect
 
 func _physics_process(delta):
-	set_laser_size()
-	if is_laser:
-		process_laser_attack()
 	if Input.is_action_just_pressed("ui_attack") and can_laser:
-		laser.color = Color.red
+		laser.visible = true
 		can_laser = false
 		is_laser = true
 		$LaserGhost.start(0.25)
 		$Timer.start(2)
+		set_laser_size()
+		process_laser_attack()
 	
-#	if Input.is_action_pressed("ui_right"):
-#		rotation += delta * angle_speed
-#	elif Input.is_action_pressed("ui_left"):
-#		rotation -= delta * angle_speed
-	rotation = (get_viewport().get_mouse_position()-position).angle()
-	
-	if Input.is_action_pressed("ui_up"):
-		velocity = Vector2.RIGHT.rotated(rotation) * speed
-		position += velocity * delta
-	elif Input.is_action_pressed("ui_down"):
-		velocity = Vector2.LEFT.rotated(rotation) * speed
-		position += velocity * delta
+	if Input.is_action_pressed("ui_right"):
+		velocity = Vector2.DOWN.rotated(rotation) * speed
+	elif Input.is_action_pressed("ui_left"):
+		velocity = Vector2.UP.rotated(rotation) * speed
 	else:
 		velocity = Vector2.ZERO
+
+	if Input.is_action_pressed("ui_up"):
+		velocity = (velocity/speed + Vector2.RIGHT.rotated(rotation)).normalized() * speed
+	elif Input.is_action_pressed("ui_down"):
+		velocity = (velocity/speed + Vector2.LEFT.rotated(rotation)).normalized() * speed
+
+	position += velocity * delta
+	rotation = (get_viewport().get_mouse_position()-position).angle()
 	heading = Vector2.RIGHT.rotated(rotation).normalized()
 	
 	position.x=clamp(position.x, 20+radius, 1004-radius)
@@ -65,6 +64,8 @@ func set_laser_size():
 	laser.rect_size.x = result_t
 
 func process_laser_attack():
+	var min_t = 1500
+	var zombie_to_kill = null
 	for zombie in Utils.zombies:
 		var player_to_obstacle = zombie.position - position
 		var radius_squared = zombie.radius * zombie.radius
@@ -79,11 +80,16 @@ func process_laser_attack():
 		var t = 1500
 		if player_to_obstacle_length_squared > radius_squared:
 			t = a - f
-		if t > 0 and t < laser.rect_size.x:
-			Utils.zombies.erase(zombie)
-			Utils.main.container_of_entities.erase(zombie)
-			Utils.main.movable_entities.erase(zombie)
-			zombie.queue_free()
+		if t > 0 and t < laser.rect_size.x and min_t > t:
+			min_t = t
+			zombie_to_kill = zombie
+	if zombie_to_kill:
+		if min_t < laser.rect_size.x:
+			laser.rect_size.x = min_t
+		Utils.zombies.erase(zombie_to_kill)
+		Utils.main.container_of_entities.erase(zombie_to_kill)
+		Utils.main.movable_entities.erase(zombie_to_kill)
+		zombie_to_kill.queue_free()
 
 
 func _on_Timer_timeout():
@@ -91,5 +97,5 @@ func _on_Timer_timeout():
 
 
 func _on_LaserGhost_timeout():
-	laser.color = Color.white
+	laser.visible = false
 	is_laser = false

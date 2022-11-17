@@ -8,10 +8,12 @@ z_index = -1
 script = ExtResource( 2 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 margin_top = -4.0
 margin_right = 1200.0
 margin_bottom = 4.0
 rect_pivot_offset = Vector2( 0, 4 )
+color = Color( 0.294118, 0.294118, 1, 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708
