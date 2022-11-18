@@ -15,6 +15,7 @@ var can_laser = true
 func _ready():
 	Utils.player = self
 	laser = $ColorRect
+	set_physics_process(false)
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_attack") and can_laser:
@@ -25,18 +26,7 @@ func _physics_process(delta):
 		$Timer.start(1)
 		set_laser_size()
 		process_laser_attack()
-	
-#	if Input.is_action_pressed("ui_right"):
-#		velocity = Vector2.DOWN.rotated(rotation) * speed
-#	elif Input.is_action_pressed("ui_left"):
-#		velocity = Vector2.UP.rotated(rotation) * speed
-#	else:
-#		velocity = Vector2.ZERO
-#
-#	if Input.is_action_pressed("ui_up"):
-#		velocity = (velocity/speed + Vector2.RIGHT.rotated(rotation)).normalized() * speed
-#	elif Input.is_action_pressed("ui_down"):
-#		velocity = (velocity/speed + Vector2.LEFT.rotated(rotation)).normalized() * speed
+
 	var v = Vector2.ZERO
 	if Input.is_action_pressed("ui_right"):
 		v += Vector2.RIGHT

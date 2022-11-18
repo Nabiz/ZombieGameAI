@@ -36,10 +36,13 @@ func calculate(state: String) -> Vector2:
 			return Vector2.ZERO
 
 func calculate_wander():
-	return 4*wander() + 0.6*hide(Utils.player, Utils.obstacles) + cohesion() + separation() + aligment() + wall_avoidance(Utils.walls) + obstacle_avoidance(Utils.obstacles)
+	return 2*wander() + 0.2*hide(Utils.player, Utils.obstacles) + 2*cohesion() + separation() + aligment() + wall_avoidance(Utils.walls) + obstacle_avoidance(Utils.obstacles)
 
 func calculate_pursuit():
-	return pursuit(Utils.player) + wall_avoidance(Utils.walls) + obstacle_avoidance(Utils.obstacles)
+	if (Utils.player.position - zombie.position).length_squared() < 20000:
+		return pursuit(Utils.player)
+	else:
+		return pursuit(Utils.player) + obstacle_avoidance(Utils.obstacles)
 
 func calculate_hide():
 	return 0.5 * wander() + hide(Utils.player, Utils.obstacles) + obstacle_avoidance(Utils.obstacles) + wall_avoidance(Utils.walls) + 0.5*separation()
@@ -76,7 +79,7 @@ func arrive(target_position: Vector2, deceleration: int) -> Vector2:
 func pursuit(evader) -> Vector2:
 	var to_evader: Vector2 = evader.position - zombie.position
 	var relative_heading: float = zombie.heading.dot(evader.heading)
-	if to_evader.dot(zombie.heading) > 0 and relative_heading < -0.95:
+	if to_evader.dot(zombie.heading) > 0: #and relative_heading < -0.95:
 		return seek(evader.position)
 	var look_ahead_time: float = to_evader.length() / (zombie.max_speed + evader.velocity.length())
 	return seek(evader.position + evader.velocity * look_ahead_time)

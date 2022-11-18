@@ -50,3 +50,11 @@ func enforce_non_penetration_constraint(entity):
 
 func _on_Timer_timeout():
 	reapet_gruping()
+
+
+func _on_Button_pressed():
+	$Button.queue_free()
+	$Timer.start()
+	Utils.player.set_physics_process(true)
+	for zombie in Utils.zombies:
+		zombie.set_physics_process(true)
