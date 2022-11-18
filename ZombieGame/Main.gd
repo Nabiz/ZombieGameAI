@@ -20,9 +20,11 @@ func  create_zombie_group():
 	var random_zombie = Utils.zombies[randi() % Utils.zombies.size()]
 	random_zombie.tag_neighbors(100)
 	
+	var zombie_count = 0
 	var zombie_group = [random_zombie]
 	for zombie in Utils.zombies:
-		if zombie.tagged:
+		if zombie.tagged and zombie_count < 5:
+			zombie_count += 1
 			zombie_group.append(zombie)
 	zombie_groups.append(zombie_group)
 

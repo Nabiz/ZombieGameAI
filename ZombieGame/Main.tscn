@@ -40,22 +40,30 @@ radius = 80
 position = Vector2( 832, 136 )
 radius = 45
 
-[node name="WallN" type="Node2D" parent="." groups=["Wall"]]
+[node name="WallN" type="Node2D" parent="." groups=[
+"Wall",
+]]
 script = ExtResource( 3 )
 size = Vector2( 1024, 20 )
 normal = Vector2( 0, 1 )
 
-[node name="WallS" type="Node2D" parent="." groups=["Wall"]]
+[node name="WallS" type="Node2D" parent="." groups=[
+"Wall",
+]]
 position = Vector2( 0, 580 )
 script = ExtResource( 3 )
 size = Vector2( 1024, 20 )
 normal = Vector2( 0, -1 )
 
-[node name="WallW" type="Node2D" parent="." groups=["Wall"]]
+[node name="WallW" type="Node2D" parent="." groups=[
+"Wall",
+]]
 script = ExtResource( 3 )
 size = Vector2( 20, 600 )
 
-[node name="WallE" type="Node2D" parent="." groups=["Wall"]]
+[node name="WallE" type="Node2D" parent="." groups=[
+"Wall",
+]]
 position = Vector2( 1004, 0 )
 script = ExtResource( 3 )
 size = Vector2( 20, 600 )

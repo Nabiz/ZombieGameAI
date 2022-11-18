@@ -36,13 +36,13 @@ func calculate(state: String) -> Vector2:
 			return Vector2.ZERO
 
 func calculate_wander():
-	return wander() + cohesion() + separation() + aligment() + wall_avoidance(Utils.walls) + 2*obstacle_avoidance(Utils.obstacles)
+	return 5*wander() + cohesion() + separation() + aligment() + wall_avoidance(Utils.walls) + obstacle_avoidance(Utils.obstacles)
 
 func calculate_pursuit():
 	return pursuit(Utils.player) + wall_avoidance(Utils.walls) + obstacle_avoidance(Utils.obstacles)
 
 func calculate_hide():
-	return wander() + 2*hide(Utils.player, Utils.obstacles) + obstacle_avoidance(Utils.obstacles) + wall_avoidance(Utils.walls) + 0.5*separation()
+	return hide(Utils.player, Utils.obstacles) + obstacle_avoidance(Utils.obstacles) + wall_avoidance(Utils.walls) + 0.5*separation()
 
 #SEEK
 func seek(target_position: Vector2) -> Vector2:

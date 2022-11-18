@@ -18,7 +18,7 @@ func _ready() -> void:
 	steering = SteeringBehaviors.new(self)
 	heading = Vector2.RIGHT
 	side = heading.rotated(PI/2)
-	state = "hide"
+	state = "wander"
 
 func _physics_process(delta) -> void:
 	state = calculate_state()
