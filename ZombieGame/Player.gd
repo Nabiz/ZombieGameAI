@@ -45,6 +45,12 @@ func _physics_process(delta):
 	position.x=clamp(position.x, 20+radius, 1004-radius)
 	position.y=clamp(position.y, 20+radius, 580-radius)
 
+	for z in Utils.zombies:
+		if (z.position - position).length() < z.radius + radius:
+			Utils.main.set_physics_process(false)
+			#Utils.reset()
+			#get_tree().change_scene("res://Main.tscn")
+
 func set_laser_size():
 	var result_t = 1500
 	for obstacle in Utils.obstacles:

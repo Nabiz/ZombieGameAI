@@ -40,9 +40,9 @@ func calculate_state():
 		max_speed = 100
 	return state
 
-func _draw() -> void:
-	draw_circle(Vector2.ZERO, radius, Color.darkred)
-	draw_circle(radius*Vector2.RIGHT, 5, Color.darkred)
+#func _draw() -> void:
+#	draw_circle(Vector2.ZERO, radius, Color.darkred)
+#	draw_circle(radius*Vector2.RIGHT, 5, Color.darkred)
 
 func tag_neighbors(radius: float):
 	for zombie in Utils.zombies:

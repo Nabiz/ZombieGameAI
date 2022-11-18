@@ -19,7 +19,7 @@ func _physics_process(delta):
 func  create_zombie_group():
 	if Utils.zombies.size() > 0:
 		var random_zombie = Utils.zombies[randi() % Utils.zombies.size()]
-		random_zombie.tag_neighbors(100)
+		random_zombie.tag_neighbors(200)
 		
 		var zombie_count = 0
 		var zombie_group = [random_zombie]

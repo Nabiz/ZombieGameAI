@@ -9,4 +9,4 @@ func _ready():
 	Utils.walls.append(self)
 
 func _draw():
-	draw_rect(Rect2(Vector2.ZERO, size), Color.gray, true)
+	draw_rect(Rect2(Vector2.ZERO, size), Color(0.2, 0.2, 0.2), true)

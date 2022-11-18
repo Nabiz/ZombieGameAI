@@ -1,7 +1,17 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Assets/player.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+void vertex() {
+	VERTEX.y += 5.0*sin(100.0*TIME);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
 
 [node name="Player" type="Node2D"]
 z_index = -1
@@ -9,6 +19,7 @@ script = ExtResource( 2 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 visible = false
+material = SubResource( 2 )
 margin_top = -4.0
 margin_right = 1200.0
 rect_pivot_offset = Vector2( 0, 2 )
