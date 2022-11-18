@@ -17,24 +17,25 @@ func _physics_process(delta):
 		enforce_non_penetration_constraint(entity)
 
 func  create_zombie_group():
-	var random_zombie = Utils.zombies[randi() % Utils.zombies.size()]
-	random_zombie.tag_neighbors(100)
-	
-	var zombie_count = 0
-	var zombie_group = [random_zombie]
-	for zombie in Utils.zombies:
-		if zombie.tagged and zombie_count < 5:
-			zombie_count += 1
-			zombie_group.append(zombie)
-	zombie_groups.append(zombie_group)
+	if Utils.zombies.size() > 0:
+		var random_zombie = Utils.zombies[randi() % Utils.zombies.size()]
+		random_zombie.tag_neighbors(100)
+		
+		var zombie_count = 0
+		var zombie_group = [random_zombie]
+		for zombie in Utils.zombies:
+			if zombie.tagged and zombie_count < 5:
+				zombie_count += 1
+				zombie_group.append(zombie)
+		zombie_groups.append(zombie_group)
 
 func reapet_gruping():
-	
 	create_zombie_group()
 	for group in zombie_groups:
 		for z in group:
 			if is_instance_valid(z):
 				z.state = "pursuit"
+				z.max_speed = 100
 		zombie_groups.erase(group)
 
 func enforce_non_penetration_constraint(entity):

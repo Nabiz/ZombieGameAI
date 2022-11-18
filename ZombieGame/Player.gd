@@ -6,6 +6,7 @@ var speed = 60
 var angle_speed = 1
 var heading = Vector2.RIGHT
 var velocity = Vector2.ZERO
+var to_mouse
 
 var laser
 var is_laser = false
@@ -25,21 +26,31 @@ func _physics_process(delta):
 		set_laser_size()
 		process_laser_attack()
 	
+#	if Input.is_action_pressed("ui_right"):
+#		velocity = Vector2.DOWN.rotated(rotation) * speed
+#	elif Input.is_action_pressed("ui_left"):
+#		velocity = Vector2.UP.rotated(rotation) * speed
+#	else:
+#		velocity = Vector2.ZERO
+#
+#	if Input.is_action_pressed("ui_up"):
+#		velocity = (velocity/speed + Vector2.RIGHT.rotated(rotation)).normalized() * speed
+#	elif Input.is_action_pressed("ui_down"):
+#		velocity = (velocity/speed + Vector2.LEFT.rotated(rotation)).normalized() * speed
+	var v = Vector2.ZERO
 	if Input.is_action_pressed("ui_right"):
-		velocity = Vector2.DOWN.rotated(rotation) * speed
-	elif Input.is_action_pressed("ui_left"):
-		velocity = Vector2.UP.rotated(rotation) * speed
-	else:
-		velocity = Vector2.ZERO
-
+		v += Vector2.RIGHT
+	if Input.is_action_pressed("ui_left"):
+		v += Vector2.LEFT
 	if Input.is_action_pressed("ui_up"):
-		velocity = (velocity/speed + Vector2.RIGHT.rotated(rotation)).normalized() * speed
+		v += Vector2.UP
 	elif Input.is_action_pressed("ui_down"):
-		velocity = (velocity/speed + Vector2.LEFT.rotated(rotation)).normalized() * speed
-
+		v += Vector2.DOWN
+	velocity = v.normalized() * speed
 	position += velocity * delta
 	rotation = (get_viewport().get_mouse_position()-position).angle()
-	heading = Vector2.RIGHT.rotated(rotation).normalized()
+	heading = velocity.normalized()
+	to_mouse = (get_viewport().get_mouse_position() - position).normalized()
 	
 	position.x=clamp(position.x, 20+radius, 1004-radius)
 	position.y=clamp(position.y, 20+radius, 580-radius)
@@ -51,7 +62,7 @@ func set_laser_size():
 		var radius_squared = obstacle.radius * obstacle.radius
 		var player_to_obstacle_length_squared = player_to_obstacle.length_squared()
 
-		var a = player_to_obstacle.dot(heading)
+		var a = player_to_obstacle.dot(to_mouse)
 		var b_sq = player_to_obstacle_length_squared - a*a
 		if radius_squared - b_sq < 0:
 			continue
@@ -71,8 +82,7 @@ func process_laser_attack():
 		var radius_squared = zombie.radius * zombie.radius
 		var player_to_obstacle_length_squared = player_to_obstacle.length_squared()
 		
-		#var a = player_to_obstacle.dot(heading)
-		var a = player_to_obstacle.dot(heading)
+		var a = player_to_obstacle.dot(to_mouse)
 		var b_sq = player_to_obstacle_length_squared - a*a
 		if radius_squared - b_sq < 0:
 			continue

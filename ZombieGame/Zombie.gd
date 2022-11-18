@@ -34,18 +34,9 @@ func _physics_process(delta) -> void:
 	position.y=clamp(position.y, 20+radius, 580-radius)
 
 func calculate_state():
-	if state == "pursuit":
+	if (position - Utils.player.position).length_squared() < 40000:
+		state = "pursuit"
 		max_speed = 100
-	if (position - Utils.player.position).length_squared() < 60000:
-		#velocity = Vector2.ZERO
-		max_speed = 100
-		return "pursuit"
-#	if Utils.player.is_laser:
-#		max_speed = 100
-#		return "hide"
-#	if (position - Utils.player.position).length_squared() > 90000 or state=="hide":
-#		max_speed = 40
-#		return "wander"
 	return state
 
 func _draw() -> void:
