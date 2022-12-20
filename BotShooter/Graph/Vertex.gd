@@ -1,13 +1,13 @@
 extends Area2D
 
-var index = 0
+var id = 0
 var vertex_scene = load("res://Graph/Vertex.tscn")
 var graph
 
 
 func _ready():
 	graph = get_parent()
-	$Label.text = str(index)
+	$Label.text = str(id)
 
 func create_neighbors():
 	var neighbors = []
@@ -17,11 +17,15 @@ func create_neighbors():
 				var neighbor = create_neighbor(position+Vector2(i*32,j*32))
 				if neighbor:
 					neighbors.append(neighbor)
+					graph.add_edge(id, neighbor.id)
 	return neighbors
 
 func create_neighbor(new_vertex_position):
-	for vertex in graph.vertexes:
+	if new_vertex_position.x < 32 or new_vertex_position.x > 1024-32 or new_vertex_position.y < 32 or new_vertex_position.y > 600-32:
+		return
+	for vertex in graph.vertecies:
 		if vertex.position == new_vertex_position:
+			graph.add_edge(id, vertex.id)
 			return
 	var new_vertex = vertex_scene.instance()
 	new_vertex.position = new_vertex_position
