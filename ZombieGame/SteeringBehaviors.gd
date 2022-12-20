@@ -15,12 +15,6 @@ func _init(new_zombie) -> void:
 
 	all_obstacles = Utils.obstacles
 	all_walls = Utils.walls
-#	var children = zombie.get_parent().get_children()
-#	for child in children:
-#		if child.is_in_group("Obstacle"):
-#			all_obstacles.append(child)
-#		if child.is_in_group("Wall"):
-#			all_walls.append(child)
 
 
 func calculate(state: String) -> Vector2:

@@ -44,12 +44,21 @@ func _physics_process(delta):
 	
 	position.x=clamp(position.x, 20+radius, 1004-radius)
 	position.y=clamp(position.y, 20+radius, 580-radius)
+	
+	if check_lose():
+		yield(get_tree().create_timer(2), "timeout")
+		get_tree().change_scene("res://Main.tscn")
 
+func check_lose():
 	for z in Utils.zombies:
 		if (z.position - position).length() < z.radius + radius:
 			Utils.main.set_physics_process(false)
-			#Utils.reset()
-			#get_tree().change_scene("res://Main.tscn")
+			Utils.player.set_physics_process(false)
+			for z2 in Utils.zombies:
+				z2.set_physics_process(false)
+			Utils.reset()
+			return true
+	return false
 
 func set_laser_size():
 	var result_t = 1500
