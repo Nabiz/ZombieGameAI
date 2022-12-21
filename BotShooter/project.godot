@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "MyAstar",
+"language": "GDScript",
+"path": "res://Graph/Astar.gd"
+} ]
+_global_script_class_icons={
+"MyAstar": ""
+}
+
 [application]
 
 config/name="Bot Shooter"

@@ -1,19 +1,19 @@
 extends Node2D
 
-var vertecies = []
+var vertices = []
 var edges = []
 var n = 1
 
 var edge_scene = load("res://Graph/Edge.tscn")
 
 func _ready():
-	vertecies.append($Vertex)
+	vertices.append($Vertex)
 	create_graph()
 	
 	yield(get_tree(), "idle_frame")
 	var verticles_to_erase = []
 	var edges_to_erase = []
-	for v in vertecies:
+	for v in vertices:
 		if v.get_overlapping_bodies():
 			verticles_to_erase.append(v)
 			v.queue_free()
@@ -22,16 +22,20 @@ func _ready():
 					edges_to_erase.append(edge)
 					edge.queue_free()
 	
-	for verticle in verticles_to_erase:
-		vertecies.erase(verticle)
+	for vertex in verticles_to_erase:
+		vertices.erase(vertex)
 	for edge in edges_to_erase:
 		edges.erase(edge)
 
-
 func get_vertex(id):
-	for vertex in vertecies:
+	for vertex in vertices:
 		if vertex.id == id:
 			return vertex
+
+func get_edge(id_from, id_to):
+	for edge in edges:
+		if id_from == edge.id_from and id_to == edge.id_to:
+			return edge
 
 func add_vertex(vertex):
 	vertex.id = n
@@ -40,7 +44,7 @@ func add_vertex(vertex):
 		vertex.queue_free()
 		return
 	n += 1
-	vertecies.append(vertex)
+	vertices.append(vertex)
 
 func add_edge(from, to):
 	var edge = edge_scene.instance()
