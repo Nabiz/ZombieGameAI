@@ -21,7 +21,7 @@ func create_neighbors():
 	return neighbors
 
 func create_neighbor(new_vertex_position):
-	if new_vertex_position.x < 32 or new_vertex_position.x > 1024-32 or new_vertex_position.y < 32 or new_vertex_position.y > 600-32:
+	if new_vertex_position.x < 0 or new_vertex_position.x > 1024 or new_vertex_position.y < 0 or new_vertex_position.y > 600:
 		return
 	for vertex in graph.vertecies:
 		if vertex.position == new_vertex_position:
