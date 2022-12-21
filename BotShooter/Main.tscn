@@ -51,3 +51,4 @@ polygon = PoolVector2Array( 128, 472, 128, 432, 448, 432, 448, 208, 496, 208, 49
 polygon = PoolVector2Array( 80, 80, 80, 296, 184, 328, 152, 368, 56, 328, 56, 72 )
 
 [node name="Bot" parent="." instance=ExtResource( 3 )]
+vertex = 2

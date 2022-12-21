@@ -1,13 +1,6 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Bot.gd" type="Script" id=1]
 
 [node name="Bot" type="Node2D"]
-
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -16.0
-margin_top = -16.0
-margin_right = 16.0
-margin_bottom = 16.0
-color = Color( 0.760784, 0.278431, 0.129412, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource( 1 )

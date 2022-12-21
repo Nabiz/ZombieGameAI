@@ -13,7 +13,7 @@ func create_neighbors():
 	for i in range(-1, 2):
 		for j in range(-1, 2):
 			if not (i == 0 and j == 0):
-				var neighbor = create_neighbor(position+Vector2(i*32,j*32))
+				var neighbor = create_neighbor(position+Vector2(i*64,j*64))
 				if neighbor:
 					neighbors.append(neighbor)
 					graph.add_edge(id, neighbor.id)
