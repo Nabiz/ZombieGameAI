@@ -2,7 +2,7 @@ extends Node2D
 
 var vertices = []
 var edges = []
-var n = 1
+var n = 2
 
 var edge_scene = load("res://Graph/Edge.tscn")
 
