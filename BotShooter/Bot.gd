@@ -43,7 +43,7 @@ func _process(delta):
 func search_for_new_path(target):
 	var astar_result = astar.search(vertex, target) 
 	var v = astar_result[target]
-	path = []
+	path = [target]
 	while v != null:
 		path.push_front(v)
 		v = astar_result[v]
