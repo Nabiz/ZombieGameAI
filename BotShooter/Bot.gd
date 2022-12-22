@@ -1,14 +1,16 @@
 extends Node2D
 
 var astar
-var health
-var ammo
+var health = 10
+var health_bar
+var ammo = 5
+var ammo_label
 
 var vertex = null
 var destination = null
 var destination_id = null
 
-var speed = 25
+var speed = 50
 var path = []
 var direction
 
@@ -16,6 +18,10 @@ export var team = 0
 
 func _ready():
 	astar = MyAstar.new()
+	health_bar = $ProgressBar
+	health_bar.value = health
+	ammo_label = $Label
+	ammo_label.text = str(ammo)
 
 func initialize():
 	vertex = Utils.graph.vertices[randi() % len(Utils.graph.vertices)].id
@@ -25,9 +31,12 @@ func _process(delta):
 	if vertex == null:
 		initialize()
 	if destination:
-		if position.distance_to(destination) < 2:
-			position = destination
+		if position.distance_to(destination) < 4:
+			#position = destination
 			vertex = destination_id
+			
+			check_pickup()
+			
 			destination_id = null
 			destination = null
 		else:
@@ -48,6 +57,17 @@ func search_for_new_path(target):
 		path.push_front(v)
 		v = astar_result[v]
 
+func check_pickup():
+	var v = Utils.graph.get_vertex(vertex)
+	if v.info == "aid":
+		v.change_info("empty")
+		health = 10
+		health_bar.value = health
+	elif v.info == "bullet":
+		v.change_info("empty")
+		ammo = clamp(ammo+10, 0, 20)
+		ammo_label.text = str(ammo)
+	
 func _draw():
 	if team == 0:
 		draw_circle(Vector2.ZERO, 16, Color.blue)

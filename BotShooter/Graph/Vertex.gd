@@ -4,9 +4,21 @@ var id = 1
 var vertex_scene = load("res://Graph/Vertex.tscn")
 var graph
 
+var info = "empty"
+
 func _ready():
 	graph = get_parent()
 	$Label.text = str(id)
+
+func change_info(new_info):
+	info = new_info
+	if info == "aid":
+		$AidSprite.visible = true
+	elif info == "bullet":
+		$BulletSprite.visible = true
+	else:
+		$AidSprite.visible = false
+		$BulletSprite.visible = false
 
 func create_neighbors():
 	var neighbors = []

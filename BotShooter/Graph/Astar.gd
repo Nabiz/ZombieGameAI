@@ -36,7 +36,7 @@ func search(id_source, id_target):
 	return previous
 
 func get_id_of_smallest_dist_in_queue(queue, distance, heuristic):
-	var min_dist = 999999
+	var min_dist = 9999999
 	var min_id = null
 	for id in queue:
 		var dist = distance[id] + heuristic[id]
