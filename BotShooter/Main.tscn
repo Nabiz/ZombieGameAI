@@ -37,7 +37,7 @@ position = Vector2( 1024, 312 )
 shape = SubResource( 2 )
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 776, 192 )
+position = Vector2( 776, 168 )
 shape = SubResource( 3 )
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="StaticBody2D"]
@@ -45,10 +45,43 @@ position = Vector2( 264, 152 )
 shape = SubResource( 3 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PoolVector2Array( 128, 472, 128, 432, 448, 432, 448, 208, 496, 208, 496, 352, 872, 352, 872, 496, 784, 416, 584, 416, 528, 496, 208, 520 )
+position = Vector2( 8, -24 )
+polygon = PoolVector2Array( 128, 472, 128, 440, 448, 440, 448, 208, 496, 208, 496, 368, 856, 384, 872, 496, 784, 416, 584, 416, 528, 496, 208, 496 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PoolVector2Array( 80, 80, 80, 296, 184, 328, 152, 368, 56, 328, 56, 72 )
+position = Vector2( 16, -16 )
+polygon = PoolVector2Array( 80, 80, 80, 296, 160, 320, 136, 352, 56, 328, 56, 72 )
 
 [node name="Bot" parent="." instance=ExtResource( 3 )]
-vertex = 2
+
+[node name="Bot2" parent="." instance=ExtResource( 3 )]
+
+[node name="Bot3" parent="." instance=ExtResource( 3 )]
+team = 1
+
+[node name="Bot4" parent="." instance=ExtResource( 3 )]
+team = 1
+
+[node name="Bot5" parent="." instance=ExtResource( 3 )]
+team = 1
+
+[node name="Bot6" parent="." instance=ExtResource( 3 )]
+team = 1
+
+[node name="Bot7" parent="." instance=ExtResource( 3 )]
+team = 1
+
+[node name="Bot8" parent="." instance=ExtResource( 3 )]
+team = 1
+
+[node name="Bot9" parent="." instance=ExtResource( 3 )]
+team = 1
+
+[node name="Bot10" parent="." instance=ExtResource( 3 )]
+team = 1
+
+[node name="Bot11" parent="." instance=ExtResource( 3 )]
+team = 1
+
+[node name="Bot12" parent="." instance=ExtResource( 3 )]
+team = 1

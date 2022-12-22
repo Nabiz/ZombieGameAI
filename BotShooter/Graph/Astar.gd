@@ -21,8 +21,6 @@ func search(id_source, id_target):
 
 	while not queue.empty():
 		var u_id = get_id_of_smallest_dist_in_queue(queue, distance)
-		if u_id == null:
-			break
 		queue.erase(u_id)
 		for v_id in graph.get_vertex(u_id).get_neighbors():
 			var alt = distance[u_id] + graph.get_edge(u_id, v_id).cost
