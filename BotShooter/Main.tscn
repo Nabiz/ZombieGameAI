@@ -55,23 +55,6 @@ polygon = PoolVector2Array( 80, 80, 80, 296, 160, 320, 136, 352, 56, 328, 56, 72
 [node name="Bot" parent="." instance=ExtResource( 3 )]
 
 [node name="Bot2" parent="." instance=ExtResource( 3 )]
-
-[node name="Bot3" parent="." instance=ExtResource( 3 )]
-team = 1
-
-[node name="Bot4" parent="." instance=ExtResource( 3 )]
-team = 1
-
-[node name="Bot5" parent="." instance=ExtResource( 3 )]
-team = 1
-
-[node name="Bot6" parent="." instance=ExtResource( 3 )]
-team = 1
-
-[node name="Bot7" parent="." instance=ExtResource( 3 )]
-team = 1
-
-[node name="Bot8" parent="." instance=ExtResource( 3 )]
 team = 1
 
 [node name="AidTimer" type="Timer" parent="."]

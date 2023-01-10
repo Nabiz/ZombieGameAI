@@ -16,12 +16,15 @@ var direction
 
 export var team = 0
 
+var raycast
+
 func _ready():
 	astar = MyAstar.new()
 	health_bar = $ProgressBar
 	health_bar.value = health
 	ammo_label = $Label
 	ammo_label.text = str(ammo)
+	raycast = $RayCast2D
 
 func initialize():
 	vertex = Utils.graph.vertices[randi() % len(Utils.graph.vertices)].id
@@ -48,6 +51,8 @@ func _process(delta):
 			direction = (destination - position).normalized()
 		else:
 			search_for_new_path(Utils.graph.vertices[randi() % len(Utils.graph.vertices)].id)
+	
+	raycast_enemy()
 
 func search_for_new_path(target):
 	var astar_result = astar.search(vertex, target) 
@@ -67,7 +72,19 @@ func check_pickup():
 		v.change_info("empty")
 		ammo = clamp(ammo+10, 0, 20)
 		ammo_label.text = str(ammo)
-	
+
+func raycast_enemy():
+	var enemies
+	if team == 0:
+		enemies = Utils.team1
+	else:
+		enemies = []#Utils.team0
+	for enemy in enemies:
+		raycast.set_cast_to(enemy.position-self.position)
+		raycast.force_raycast_update()
+		if raycast.get_collider():
+			prints(self.name, "shoots to", raycast.get_collider())
+
 func _draw():
 	if team == 0:
 		draw_circle(Vector2.ZERO, 16, Color.blue)
