@@ -1,4 +1,4 @@
-extends Node2D
+extends KinematicBody2D
 
 var astar
 var health = 10
@@ -10,13 +10,17 @@ var vertex = null
 var destination = null
 var destination_id = null
 
-var speed = 50
+var speed = 35
 var path = []
 var direction
+
+var can_shoot = false
 
 export var team = 0
 
 var raycast
+var shoot_ray
+
 
 func _ready():
 	astar = MyAstar.new()
@@ -25,6 +29,11 @@ func _ready():
 	ammo_label = $Label
 	ammo_label.text = str(ammo)
 	raycast = $RayCast2D
+	shoot_ray = $ShootRay
+	if team == 0:
+		shoot_ray.modulate = Color.blue
+	else:
+		shoot_ray.modulate = Color.red
 
 func initialize():
 	vertex = Utils.graph.vertices[randi() % len(Utils.graph.vertices)].id
@@ -52,6 +61,11 @@ func _process(delta):
 		else:
 			search_for_new_path(Utils.graph.vertices[randi() % len(Utils.graph.vertices)].id)
 	
+	if health == 0:
+		$CollisionShape2D.disabled = true
+		visible = false
+		set_process(false)
+	
 	raycast_enemy()
 
 func search_for_new_path(target):
@@ -78,15 +92,36 @@ func raycast_enemy():
 	if team == 0:
 		enemies = Utils.team1
 	else:
-		enemies = []#Utils.team0
+		enemies = Utils.team0
 	for enemy in enemies:
 		raycast.set_cast_to(enemy.position-self.position)
 		raycast.force_raycast_update()
-		if raycast.get_collider():
-			prints(self.name, "shoots to", raycast.get_collider())
+		if raycast.get_collider() == enemy:
+			shoot_to_enemy(enemy, enemies)
+
+func shoot_to_enemy(enemy, enemies):
+	if can_shoot:
+		can_shoot = false
+		shoot_ray.set_cast_to(100*(enemy.position-self.position).rotated(rand_range(-0.2, 0.2)))
+		shoot_ray.force_raycast_update()
+		var shoot_object = shoot_ray.get_collider()
+		if shoot_object in enemies:
+			enemy.health = clamp(enemy.health - 1 - randi() % 4, 0, 10)
+			enemy.health_bar.value = enemy.health
+		shoot_ray.set_cast_to(shoot_ray.get_collision_point()-self.position)
+		shoot_ray.visible = true
+		yield(get_tree().create_timer(0.2), "timeout")
+		shoot_ray.visible = false
+	else:
+		if $ShootTimer.is_stopped():
+			$ShootTimer.start(rand_range(1, 2.5))
 
 func _draw():
 	if team == 0:
 		draw_circle(Vector2.ZERO, 16, Color.blue)
 	else:
 		draw_circle(Vector2.ZERO, 16, Color.red)
+
+
+func _on_ShootTimer_timeout():
+	can_shoot = true
