@@ -21,6 +21,9 @@ export var team = 0
 var raycast
 var shoot_ray
 
+#AID AMMO FIGHT WANDER
+var state = "wander"
+var goal = null
 
 func _ready():
 	astar = MyAstar.new()
@@ -39,7 +42,39 @@ func initialize():
 	vertex = Utils.graph.vertices[randi() % len(Utils.graph.vertices)].id
 	position = Utils.graph.get_vertex(vertex).position
 
+func update_state():
+	if health <= 3:
+		if state == "wander":
+			path = []
+		state = "aid"
+	elif ammo <= 3:
+		if state == "wander":
+			path = []
+		state = "bullet"
+	else:
+		state = "wander"
+	
+	if state != "wander":
+		if goal.info == "empty":
+			path = []
+
+func calculate_goal():
+	if state == "aid":
+		for v in Utils.graph.vertices:
+			if v.info == "aid":
+				print("LECZONKO")
+				return v
+	elif state == "bullet":
+		for v in Utils.graph.vertices:
+			if v.info == "bullet":
+				print("DUPCIA")
+				return v
+	elif state == "wander":
+		return Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
+	return Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
+
 func _process(delta):
+	update_state()
 	if vertex == null:
 		initialize()
 	if destination:
@@ -59,7 +94,8 @@ func _process(delta):
 			destination = Utils.graph.get_vertex(destination_id).position
 			direction = (destination - position).normalized()
 		else:
-			search_for_new_path(Utils.graph.vertices[randi() % len(Utils.graph.vertices)].id)
+			goal = calculate_goal()
+			search_for_new_path(goal.id)
 	
 	if health == 0:
 		$CollisionShape2D.disabled = true
@@ -69,12 +105,13 @@ func _process(delta):
 	raycast_enemy()
 
 func search_for_new_path(target):
-	var astar_result = astar.search(vertex, target) 
-	var v = astar_result[target]
-	path = [target]
-	while v != null:
-		path.push_front(v)
-		v = astar_result[v]
+	if target:
+		var astar_result = astar.search(vertex, target) 
+		var v = astar_result[target]
+		path = [target]
+		while v != null:
+			path.push_front(v)
+			v = astar_result[v]
 
 func check_pickup():
 	var v = Utils.graph.get_vertex(vertex)
@@ -84,7 +121,7 @@ func check_pickup():
 		health_bar.value = health
 	elif v.info == "bullet":
 		v.change_info("empty")
-		ammo = clamp(ammo+10, 0, 20)
+		ammo = clamp(ammo+5, 0, 10)
 		ammo_label.text = str(ammo)
 
 func raycast_enemy():
@@ -100,7 +137,9 @@ func raycast_enemy():
 			shoot_to_enemy(enemy, enemies)
 
 func shoot_to_enemy(enemy, enemies):
-	if can_shoot:
+	if can_shoot and ammo>0:
+		ammo -= 1
+		ammo_label.text = str(ammo)
 		can_shoot = false
 		shoot_ray.set_cast_to(100*(enemy.position-self.position).rotated(rand_range(-0.2, 0.2)))
 		shoot_ray.force_raycast_update()
