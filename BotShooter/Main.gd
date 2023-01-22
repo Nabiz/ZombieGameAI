@@ -8,15 +8,15 @@ var target = 1
 
 func _ready():
 	randomize()
-	for i in range(2):
-		var v = Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
-		var v2 = Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
-		v.change_info("aid")
-		v2.change_info("bullet")
 
-func _on_AidTimer_timeout():
-	var v = Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
-	var v2 = Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
-	v.change_info("aid")
-	v2.change_info("bullet")
-	$AidTimer.start(20)
+func _process(delta):
+	if len(Utils.aids) < 3:
+		var v = Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
+		v.change_info("aid")
+		if not v in Utils.aids:
+			Utils.aids.append(v)
+	if len(Utils.bullets) < 3:
+		var v2 = Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
+		v2.change_info("bullet")
+		if not v2 in Utils.bullets:
+			Utils.bullets.append(v2)

@@ -60,11 +60,11 @@ func update_state():
 
 func calculate_goal():
 	if state == "aid":
-		for v in Utils.graph.vertices:
+		for v in Utils.aids:
 			if v.info == "aid":
 				return v
 	elif state == "bullet":
-		for v in Utils.graph.vertices:
+		for v in Utils.bullets:
 			if v.info == "bullet":
 				return v
 	elif state == "wander":
@@ -115,10 +115,12 @@ func check_pickup():
 	var v = Utils.graph.get_vertex(vertex)
 	if v.info == "aid":
 		v.change_info("empty")
+		Utils.aids.erase(v)
 		health = 10
 		health_bar.value = health
 	elif v.info == "bullet":
 		v.change_info("empty")
+		Utils.bullets.erase(v)
 		ammo = clamp(ammo+5, 0, 10)
 		ammo_label.text = str(ammo)
 

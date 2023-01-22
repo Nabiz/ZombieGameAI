@@ -5,6 +5,9 @@ var bots
 var team0 = []
 var team1 = []
 
+var aids = []
+var bullets = []
+
 func _ready():
 	graph = get_node("../Main/Graph")
 	bots = get_tree().get_nodes_in_group("bots")

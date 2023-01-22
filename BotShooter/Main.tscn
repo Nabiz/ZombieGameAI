@@ -61,9 +61,3 @@ team = 1
 
 [node name="Bot4" parent="." instance=ExtResource( 3 )]
 team = 1
-
-[node name="AidTimer" type="Timer" parent="."]
-wait_time = 20.0
-autostart = true
-
-[connection signal="timeout" from="AidTimer" to="." method="_on_AidTimer_timeout"]
