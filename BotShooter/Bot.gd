@@ -3,7 +3,7 @@ extends KinematicBody2D
 var astar
 var health = 10
 var health_bar
-var ammo = 5
+var ammo = 10
 var ammo_label
 
 var vertex = null
@@ -41,13 +41,16 @@ func _ready():
 func initialize():
 	vertex = Utils.graph.vertices[randi() % len(Utils.graph.vertices)].id
 	position = Utils.graph.get_vertex(vertex).position
+	destination_id = null
+	destination = null
+	path = []
 
 func update_state():
 	if health <= 3:
 		if state == "wander":
 			path = []
 		state = "aid"
-	elif ammo <= 3:
+	elif ammo <= 5:
 		if state == "wander":
 			path = []
 		state = "bullet"
@@ -59,17 +62,27 @@ func update_state():
 			path = []
 
 func calculate_goal():
+	var goal = Utils.graph.get_vertex(vertex)
+	var path_len = 99999
+	var new_path
 	if state == "aid":
 		for v in Utils.aids:
-			if v.info == "aid":
-				return v
+			new_path = search_for_new_path(v.id)
+			if len(new_path) < path_len:
+				path_len = len(new_path)
+				path = new_path
+				goal = v
 	elif state == "bullet":
 		for v in Utils.bullets:
-			if v.info == "bullet":
-				return v
+			new_path = search_for_new_path(v.id)
+			if len(new_path) < path_len:
+				path_len = len(new_path)
+				path = new_path
+				goal = v
 	elif state == "wander":
-		return Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
-	return Utils.graph.get_vertex(vertex)
+		goal = Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
+		path = search_for_new_path(goal.id)
+	return goal
 
 func _process(delta):
 	update_state()
@@ -93,23 +106,26 @@ func _process(delta):
 			direction = (destination - position).normalized()
 		else:
 			goal = calculate_goal()
-			search_for_new_path(goal.id)
+			#path = search_for_new_path(goal.id)
 	
 	if health == 0:
 		$CollisionShape2D.disabled = true
 		visible = false
+		$RespawnTimer.start(2)
 		set_process(false)
 	
 	raycast_enemy()
 
 func search_for_new_path(target):
+	var new_path
 	if target:
 		var astar_result = astar.search(vertex, target) 
 		var v = astar_result[target]
-		path = [target]
+		new_path = [target]
 		while v != null:
-			path.push_front(v)
+			new_path.push_front(v)
 			v = astar_result[v]
+	return new_path
 
 func check_pickup():
 	var v = Utils.graph.get_vertex(vertex)
@@ -121,7 +137,7 @@ func check_pickup():
 	elif v.info == "bullet":
 		v.change_info("empty")
 		Utils.bullets.erase(v)
-		ammo = clamp(ammo+5, 0, 10)
+		ammo = clamp(ammo+10, 0, 20)
 		ammo_label.text = str(ammo)
 
 func raycast_enemy():
@@ -164,3 +180,14 @@ func _draw():
 
 func _on_ShootTimer_timeout():
 	can_shoot = true
+
+func _on_RespawnTimer_timeout():
+	initialize()
+	health = 10
+	ammo = 10
+	health_bar.value = health
+	ammo_label.text = str(ammo)
+	state = "wander"
+	$CollisionShape2D.disabled = false
+	visible = true
+	set_process(true)
