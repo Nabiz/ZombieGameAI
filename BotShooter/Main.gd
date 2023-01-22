@@ -8,6 +8,8 @@ var target = 1
 
 func _ready():
 	randomize()
+	Utils.blue_score = $BlueScore
+	Utils.red_score = $RedScore
 
 func _process(delta):
 	if len(Utils.aids) < 3:

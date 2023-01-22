@@ -39,11 +39,15 @@ func _ready():
 		shoot_ray.modulate = Color.red
 
 func initialize():
-	vertex = Utils.graph.vertices[randi() % len(Utils.graph.vertices)].id
-	position = Utils.graph.get_vertex(vertex).position
-	destination_id = null
-	destination = null
-	path = []
+	var v = Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
+	if v.info == "empty":
+		vertex = v.id
+		position = v.position
+		destination_id = null
+		destination = null
+		path = []
+	else:
+		initialize()
 
 func update_state():
 	if health <= 3:
@@ -55,11 +59,21 @@ func update_state():
 			path = []
 		state = "bullet"
 	else:
-		state = "wander"
-	
+		if health < 8:
+			if state == "wander":
+				path = []
+			state = "aid"
+		elif ammo < 15:
+			if state == "wander":
+				path = []
+			state = "bullet"
+		else:
+			state = "wander"
+			
 	if state != "wander":
-		if goal.info == "empty":
-			path = []
+		if goal:
+			if goal.info == "empty":
+				path = []
 
 func calculate_goal():
 	var goal = Utils.graph.get_vertex(vertex)
@@ -82,6 +96,9 @@ func calculate_goal():
 	elif state == "wander":
 		goal = Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
 		path = search_for_new_path(goal.id)
+	else:
+		goal = Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
+		path = search_for_new_path(goal.id)
 	return goal
 
 func _process(delta):
@@ -89,7 +106,7 @@ func _process(delta):
 	if vertex == null:
 		initialize()
 	if destination:
-		if position.distance_to(destination) < 4:
+		if position.distance_to(destination) < 5:
 			#position = destination
 			vertex = destination_id
 			
@@ -109,6 +126,10 @@ func _process(delta):
 			#path = search_for_new_path(goal.id)
 	
 	if health == 0:
+		if team == 0:
+			Utils.red_score.text = str(int(Utils.red_score.text)+1)
+		else:
+			Utils.blue_score.text = str(int(Utils.blue_score.text)+1)
 		$CollisionShape2D.disabled = true
 		visible = false
 		$RespawnTimer.start(2)

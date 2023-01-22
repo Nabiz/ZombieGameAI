@@ -5,7 +5,7 @@
 [ext_resource path="res://Assets/aid.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 16.0
+radius = 20.0
 
 [node name="Vertex" type="Area2D"]
 script = ExtResource( 2 )
