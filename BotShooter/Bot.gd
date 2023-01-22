@@ -62,16 +62,14 @@ func calculate_goal():
 	if state == "aid":
 		for v in Utils.graph.vertices:
 			if v.info == "aid":
-				print("LECZONKO")
 				return v
 	elif state == "bullet":
 		for v in Utils.graph.vertices:
 			if v.info == "bullet":
-				print("DUPCIA")
 				return v
 	elif state == "wander":
 		return Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
-	return Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
+	return Utils.graph.get_vertex(vertex)
 
 func _process(delta):
 	update_state()

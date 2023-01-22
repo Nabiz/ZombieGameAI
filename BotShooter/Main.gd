@@ -19,4 +19,4 @@ func _on_AidTimer_timeout():
 	var v2 = Utils.graph.vertices[randi() % len(Utils.graph.vertices)]
 	v.change_info("aid")
 	v2.change_info("bullet")
-	$AidTimer.start(10)
+	$AidTimer.start(20)
