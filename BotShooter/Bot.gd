@@ -106,8 +106,8 @@ func _process(delta):
 	if vertex == null:
 		initialize()
 	if destination:
-		if position.distance_to(destination) < 5:
-			#position = destination
+		if position.distance_to(destination) < 2:
+			position = destination
 			vertex = destination_id
 			
 			check_pickup()
